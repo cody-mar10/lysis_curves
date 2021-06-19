@@ -125,8 +125,10 @@ columns like this:
 
 </div>
 
-I’ve included an example of both simple and multivariable data sets: -
-`data/simpledata.csv` - `data/complexdata.csv`
+I’ve included an example of both simple and multivariable data sets:
+
+  - `data/simpledata.csv`
+  - `data/complexdata.csv`
 
 ## Convert data to long format
 

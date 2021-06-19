@@ -85,7 +85,8 @@ DO NOT, and I repeat DO NOT!!! use _ anywhere else. This is because the long for
 data.frame(Genotype = rep(c("A", "B"), 2), DNP = rep(c("-", "+"), each=2))
 ```
 
-I've included an example of both simple and multivariable data sets:
+I've included an example of both simple and multivariable data sets:  
+
   - `data/simpledata.csv`
   - `data/complexdata.csv`
 
