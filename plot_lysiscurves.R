@@ -85,7 +85,7 @@ var <- c("Genotype", "N4_add", "Time_add")
 data_long <- wideToLong(data, var)
 
 # define custom offset to move line labels away from axis
-offset <- max(data_long$Time)*0.025
+offset <- max(data_long$Time)*0.035
 
 # set minor ticks based on max OD
 # y-axis needs to look different if OD values rise above 1 due to log scale
@@ -187,3 +187,12 @@ if (ncol(data_long) == 3) {
 }
 invisible(dev.off())
 print(paste0("Saved: ", save))
+
+save = paste0(strsplit(basename(file), ".csv")[[1]], ".svg")
+svg(save, width=7.5, height=7.5)
+if (ncol(data_long) == 3) {
+  simpleplot(data_long=data_long)
+} else {
+  complexplot(data_long=data_long, variables=var)
+}
+dev.off()

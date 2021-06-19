@@ -123,7 +123,7 @@ Here is how I plot my graphs using my customizations:
 
 ```{r simple plot}
 # define custom offset to move line labels away from axis
-offset <- max(data_long$Time)*0.05
+offset <- max(data_long$Time)*0.035
 
 # ggprism has default colors to use, but I want to reorder them
 cols = ggprism_data$colour_palettes$colors[c(6,1:5,7:20)]
@@ -144,7 +144,7 @@ simpleplot <- function(data_long) {
   g <- data_long %>% 
       ggplot(aes(x=Time, y=OD)) +
       geom_line(aes(color=Sample), size=1.25) +
-      geom_point(aes(shape=Sample), color="black", size=5) +
+      geom_point(aes(shape=Sample), color="black", size=3.5) +
       geom_text_repel(data=subset(data_long, Time == max(data_long$Time)), # labels next to lines
                       aes(label=Sample, 
                           color=Sample, 
@@ -245,7 +245,7 @@ complexplot <- function(data_long, variables) {
                       shape=variables[3]
                       )) +
     geom_line(size=1.25) +
-    geom_point(color="black", fill="black", size=5) +
+    geom_point(color="black", fill="black", size=3.5) +
     scale_shape_prism(palette = "complete") + # change prism bullet shape palette
     scale_color_manual(values=cols) +
     scale_y_log10(limit=c(0.01,max_yax), # put y on log10 scale
@@ -349,7 +349,7 @@ wideToLong <- function(data, variables=c()) {
 data_long <- wideToLong(data=data, var)
 
 # define custom offset to move line labels away from axis
-offset <- max(data_long$Time)*0.05
+offset <- max(data_long$Time)*0.035
 
 # ggprism has default colors to use, but I want to reorder them
 cols = ggprism_data$colour_palettes$colors[c(6,1:5,7:20)]
@@ -367,7 +367,7 @@ simpleplot <- function(data_long) {
   g <- data_long %>% 
       ggplot(aes(x=Time, y=OD)) +
       geom_line(aes(color=Sample), size=1.25) +
-      geom_point(aes(shape=Sample), fill="black", size=2.5) +
+      geom_point(aes(shape=Sample), fill="black", size=3.5) +
       geom_text_repel(data=subset(data_long, Time == max(data_long$Time)), # labels next to lines
                       aes(label=Sample, 
                           color=Sample, 
@@ -414,7 +414,7 @@ complexplot <- function(data_long, variables) {
                       shape=variables[3]
                       )) +
     geom_line(size=1.25) +
-    geom_point(color="black", fill="black", size=5) +
+    geom_point(color="black", fill="black", size=3.5) +
     scale_shape_prism(palette = "complete") + # change prism bullet shape palette
     scale_color_manual(values=cols) +
     scale_y_log10(limit=c(0.01,max_yax), # put y on log10 scale
@@ -446,6 +446,15 @@ if (ncol(data_long) == 3) {
 } else {
   complexplot(data_long=data_long, variables=var)
 }
-invisible(dev.off())
-print(paste0("Saved: ", save))
+dev.off()
+
+## or if you want to save as a svg file for making full figures in inkscape
+save = paste0(strsplit(basename(file), ".csv")[[1]], ".svg")
+svg(save, width=7.5, height=7.5)
+if (ncol(data_long) == 3) {
+  simpleplot(data_long=data_long)
+} else {
+  complexplot(data_long=data_long, variables=var)
+}
+dev.off()
 ```
