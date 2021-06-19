@@ -7,7 +7,7 @@ Cody Martin
 
 You can install R here: <https://cran.r-project.org/mirrors.html>
 
--   Just choose the location closest to you
+  - Just choose the location closest to you
 
 You can install R studio, a fantastic interactive coding environment for
 R, here: <https://www.rstudio.com/products/rstudio/download/>
@@ -20,11 +20,14 @@ use the code below.
 Need more R help? Checkout my Intro to R document:
 <https://github.com/cody-mar10/intro_R/blob/main/README.md>
 
+Scroll to the end to have a copy & paste template to plot code.
+
 # Load packages
 
 First load your packages. Normally, you would need to install any
 packages you don’t have loaded, but I am forcing the code to install
-packages for you if they are not already.
+packages for you if they are not
+already.
 
 ``` r
 pkgs <- c("tidyverse", "ggprism", "ggrepel") # note tidyverse includes ggplot2 and dplyr
@@ -48,8 +51,8 @@ Here, I read in my wide-formatted lysis curve data. Although I have
 simple names, you should keep your names useful for coding. Here is an
 example:
 
--   pRE gp60-63 = BAD!!! Don’t ever use spaces
--   pRE\_gp60-63 = GOOD Use \_ instead of spaces
+  - pRE gp60-63 = BAD\!\!\! Don’t ever use spaces
+  - pRE\_gp60-63 = GOOD Use \_ instead of spaces
 
 Be consistent in your sample naming. Furthermore, you first column
 **must** be the time column.
@@ -67,7 +70,7 @@ data
 <div class="kable-table">
 
 | Time | MG1655 |    N4 |     A |     B |     C |     D |     E |
-|-----:|-------:|------:|------:|------:|------:|------:|------:|
+| ---: | -----: | ----: | ----: | ----: | ----: | ----: | ----: |
 |    0 |  0.223 | 0.239 | 0.237 | 0.231 | 0.228 | 0.235 | 0.231 |
 |   30 |  0.523 | 0.488 | 0.489 | 0.505 | 0.510 | 0.506 | 0.504 |
 |   35 |  0.620 | 0.558 | 0.441 | 0.505 | 0.550 | 0.503 | 0.510 |
@@ -96,25 +99,25 @@ re-format your data easily.
 
 However, if you have multiple varibles in your lysis curve like genetic
 background and +/- some chemical like DNP, nalidixic acid,
-chloramphenicol, etc. then **READ CAREFULLY!!!**
+chloramphenicol, etc. then **READ CAREFULLY\!\!\!**
 
 You should name your sample columns with ODs with all variable levels
-separated by \_ **UNDERSCORES ONLY!!!**
+separated by \_ **UNDERSCORES ONLY\!\!\!**
 
 Example: suppose I have genotype A and B, and +/- DNP, I would name my
 columns like this:
 
 `A_- B_- A_+ B_+`
 
-DO NOT, and I repeat DO NOT!!! use \_ anywhere else. This is because the
-long formatting code will separate the column name into separate columns
-at the \_ delimiter, so the above columns would separate into columns
-like this:
+DO NOT, and I repeat DO NOT\!\!\! use \_ anywhere else. This is because
+the long formatting code will separate the column name into separate
+columns at the \_ delimiter, so the above columns would separate into
+columns like this:
 
 <div class="kable-table">
 
 | Genotype | DNP |
-|:---------|:----|
+| :------- | :-- |
 | A        | \-  |
 | B        | \-  |
 | A        | \+  |
@@ -122,9 +125,8 @@ like this:
 
 </div>
 
-I’ve included an example of both simple and multivariable data sets: 
-  - `data/simpledata.csv` 
-  - `data/complexdata.csv`
+I’ve included an example of both simple and multivariable data sets: -
+`data/simpledata.csv` - `data/complexdata.csv`
 
 ## Convert data to long format
 
@@ -156,7 +158,7 @@ data_long %>% head(10)
 <div class="kable-table">
 
 | Time | Sample |    OD |
-|-----:|:-------|------:|
+| ---: | :----- | ----: |
 |    0 | MG1655 | 0.223 |
 |   30 | MG1655 | 0.523 |
 |   35 | MG1655 | 0.620 |
@@ -258,7 +260,7 @@ data
 <div class="kable-table">
 
 | Time | pRE\_-N4\_None | gp60-63\_-N4\_None | pRE\_+N4\_t=20 | gp60-63\_+N4\_t=20 | pRE\_+N4\_t=25 | gp60-63\_+N4\_t=25 | pRE\_+N4\_t=30 | gp60-63\_+N4\_t=30 |
-|-----:|---------------:|-------------------:|---------------:|-------------------:|---------------:|-------------------:|---------------:|-------------------:|
+| ---: | -------------: | -----------------: | -------------: | -----------------: | -------------: | -----------------: | -------------: | -----------------: |
 |    0 |          0.200 |              0.201 |          0.219 |              0.208 |          0.217 |              0.204 |          0.219 |              0.204 |
 |   15 |          0.337 |              0.307 |          0.331 |              0.295 |          0.335 |              0.314 |          0.335 |              0.312 |
 |   20 |          0.366 |              0.326 |          0.363 |              0.377 |          0.365 |              0.357 |          0.374 |              0.363 |
@@ -313,22 +315,22 @@ data_long %>% head(10)
 <div class="kable-table">
 
 | Time | Sample         | Genotype | N4\_add | Time\_add |    OD |
-|-----:|:---------------|:---------|:--------|:----------|------:|
-|    0 | pRE\_-N4\_None | pRE      | -N4     | None      | 0.200 |
-|   15 | pRE\_-N4\_None | pRE      | -N4     | None      | 0.337 |
-|   20 | pRE\_-N4\_None | pRE      | -N4     | None      | 0.366 |
-|   25 | pRE\_-N4\_None | pRE      | -N4     | None      | 0.391 |
-|   30 | pRE\_-N4\_None | pRE      | -N4     | None      | 0.440 |
-|   35 | pRE\_-N4\_None | pRE      | -N4     | None      | 0.501 |
-|   40 | pRE\_-N4\_None | pRE      | -N4     | None      | 0.552 |
-|   45 | pRE\_-N4\_None | pRE      | -N4     | None      | 0.607 |
-|   50 | pRE\_-N4\_None | pRE      | -N4     | None      | 0.662 |
-|   55 | pRE\_-N4\_None | pRE      | -N4     | None      | 0.725 |
+| ---: | :------------- | :------- | :------ | :-------- | ----: |
+|    0 | pRE\_-N4\_None | pRE      | \-N4    | None      | 0.200 |
+|   15 | pRE\_-N4\_None | pRE      | \-N4    | None      | 0.337 |
+|   20 | pRE\_-N4\_None | pRE      | \-N4    | None      | 0.366 |
+|   25 | pRE\_-N4\_None | pRE      | \-N4    | None      | 0.391 |
+|   30 | pRE\_-N4\_None | pRE      | \-N4    | None      | 0.440 |
+|   35 | pRE\_-N4\_None | pRE      | \-N4    | None      | 0.501 |
+|   40 | pRE\_-N4\_None | pRE      | \-N4    | None      | 0.552 |
+|   45 | pRE\_-N4\_None | pRE      | \-N4    | None      | 0.607 |
+|   50 | pRE\_-N4\_None | pRE      | \-N4    | None      | 0.662 |
+|   55 | pRE\_-N4\_None | pRE      | \-N4    | None      | 0.725 |
 
 </div>
 
 See how there are extra columns in our long-formatted data frame based
-on the variables we input! We can use these extra columns to better
+on the variables we input\! We can use these extra columns to better
 distinguish all our curves in the lysis curve.
 
 ### Complex Plotting
@@ -417,7 +419,7 @@ data
 <div class="kable-table">
 
 | Time | pRE\_-N4 | gp60-63\_-N4 | gp63-T65I\_-N4 | gp63-T71A\_-N4 | pRE\_+N4 | gp60-63\_+N4 | gp63-T65I\_+N4 | gp63-T71A\_+N4 |
-|-----:|---------:|-------------:|---------------:|---------------:|---------:|-------------:|---------------:|---------------:|
+| ---: | -------: | -----------: | -------------: | -------------: | -------: | -----------: | -------------: | -------------: |
 |    0 |    0.208 |        0.176 |          0.179 |          0.167 |    0.190 |        0.167 |          0.176 |          0.168 |
 |   15 |    0.300 |        0.267 |          0.260 |          0.251 |    0.299 |        0.262 |          0.268 |          0.250 |
 |   20 |    0.326 |        0.302 |          0.279 |          0.265 |    0.326 |        0.296 |          0.272 |          0.291 |
@@ -441,17 +443,17 @@ data_long %>% head(10)
 <div class="kable-table">
 
 | Time | Sample   | Strain | N4\_addition |    OD |
-|-----:|:---------|:-------|:-------------|------:|
-|    0 | pRE\_-N4 | pRE    | -N4          | 0.208 |
-|   15 | pRE\_-N4 | pRE    | -N4          | 0.300 |
-|   20 | pRE\_-N4 | pRE    | -N4          | 0.326 |
-|   25 | pRE\_-N4 | pRE    | -N4          | 0.380 |
-|   30 | pRE\_-N4 | pRE    | -N4          | 0.441 |
-|   35 | pRE\_-N4 | pRE    | -N4          | 0.485 |
-|   40 | pRE\_-N4 | pRE    | -N4          | 0.550 |
-|   45 | pRE\_-N4 | pRE    | -N4          | 0.571 |
-|   50 | pRE\_-N4 | pRE    | -N4          | 0.671 |
-|   55 | pRE\_-N4 | pRE    | -N4          | 0.702 |
+| ---: | :------- | :----- | :----------- | ----: |
+|    0 | pRE\_-N4 | pRE    | \-N4         | 0.208 |
+|   15 | pRE\_-N4 | pRE    | \-N4         | 0.300 |
+|   20 | pRE\_-N4 | pRE    | \-N4         | 0.326 |
+|   25 | pRE\_-N4 | pRE    | \-N4         | 0.380 |
+|   30 | pRE\_-N4 | pRE    | \-N4         | 0.441 |
+|   35 | pRE\_-N4 | pRE    | \-N4         | 0.485 |
+|   40 | pRE\_-N4 | pRE    | \-N4         | 0.550 |
+|   45 | pRE\_-N4 | pRE    | \-N4         | 0.571 |
+|   50 | pRE\_-N4 | pRE    | \-N4         | 0.671 |
+|   55 | pRE\_-N4 | pRE    | \-N4         | 0.702 |
 
 </div>
 
@@ -460,3 +462,153 @@ complexplot(data_long, var)
 ```
 
 ![](README_files/figure-gfm/complex%20example%202-1.png)<!-- -->
+
+``` r
+pkgs <- c("tidyverse", "ggprism", "ggrepel") # note tidyverse includes ggplot2 and dplyr
+# Check if packages are installed
+for (p in pkgs) {
+  if(! p %in% installed.packages()){
+    install.packages(p, dependencies = TRUE)
+  }
+}
+
+# Load packages
+invisible(lapply(pkgs, library, character.only=T))
+
+# Read in WIDE FORMATED data
+
+### USER INPUT - CHANGE THIS LINE ###
+file <- "data/simpledata.csv"
+data <- read_csv(file)
+
+### USER INPUT - CHANGE THIS LINE ###
+### Input your variable names in quotes followed by ,
+### like this c("var1", "var2")
+var <- c()
+
+# Reformat data into long format
+# Rename first column with time to be Time
+# first column MUSTTTTT BE TIME
+colnames(data)[1] <- "Time"
+
+wideToLong <- function(data, variables=c()) {
+  # check if any columns have the _ delimiter specifying multiple varibles
+  var_check <- grepl("_", colnames(data))
+  
+  if (TRUE %in% var_check && length(variables) != 0) { # if any columns have the _ delimiter
+    data_long <- data %>% 
+      gather(key="Sample", value = "OD", -Time) %>% 
+      separate(Sample, sep="_", remove=F, into=variables)
+  } else {
+    data_long <- data %>% 
+      gather(key="Sample", value = "OD", -Time)
+  }
+  
+  return(data_long)
+}
+
+data_long <- wideToLong(data=data, var)
+
+# define custom offset to move line labels away from axis
+offset <- max(data_long$Time)*0.05
+
+# ggprism has default colors to use, but I want to reorder them
+cols = ggprism_data$colour_palettes$colors[c(6,1:5,7:20)]
+
+# make ggplot object
+simpleplot <- function(data_long) {
+  if (max(data_long$OD, na.rm = T) > 1) {
+    max_yax = 10
+    y_minor = c(rep(1:9, 3)*(10^rep(-2:0, each=9)), 10) # minor ticks
+  } else {
+    max_yax = 1
+    y_minor = c(rep(1:9, 2)*(10^rep(c(-2, -1), each=9)), 1) # minor ticks
+  }
+  
+  g <- data_long %>% 
+      ggplot(aes(x=Time, y=OD)) +
+      geom_line(aes(color=Sample), size=1.25) +
+      geom_point(aes(shape=Sample), fill="black", size=2.5) +
+      geom_text_repel(data=subset(data_long, Time == max(data_long$Time)), # labels next to lines
+                      aes(label=Sample, 
+                          color=Sample, 
+                          x=Inf, # put label off plot
+                          y=OD), # put label at same height as last data point
+                      direction="y",
+                      xlim=c(max(data_long$Time)+offset, Inf), # offset labels
+                      min.segment.length=Inf, # won't draw lines
+                      hjust=0, # left justify
+                      size=5,
+                      fontface="bold") +
+      scale_shape_prism(palette = "complete") + # change prism bullet shape palette
+      scale_color_manual(values=cols) +
+      scale_y_log10(limit=c(0.01,max_yax), # put y on log10 scale
+                         minor_breaks=y_minor,
+                         guide=guide_prism_minor(),
+                         expand=c(0,0)) + 
+      scale_x_continuous(minor_breaks=seq(0,max(data_long$Time),by=10),
+                         guide=guide_prism_minor(),
+                         expand=c(0,0)) + 
+      labs(x="Time (min)",
+           y="A550") +
+      theme_prism(border=T) + # theme like prism plot
+      coord_cartesian(clip="off") +
+      theme(aspect.ratio=1/1, 
+            legend.position = "none",
+            plot.margin=unit(c(1,5,1,1), "lines"))
+  return(g)
+}
+
+complexplot <- function(data_long, variables) {
+  if (max(data_long$OD, na.rm = T) > 1) {
+    max_yax = 10
+    y_minor = c(rep(1:9, 3)*(10^rep(-2:0, each=9)), 10) # minor ticks
+  } else {
+    max_yax = 1
+    y_minor = c(rep(1:9, 2)*(10^rep(c(-2, -1), each=9)), 1) # minor ticks
+  }
+  
+  variables = rep(variables, 2)
+  g <- data_long %>% 
+    ggplot(aes_string(x="Time", y="OD", 
+                      color=variables[1], linetype=variables[2],
+                      shape=variables[3]
+                      )) +
+    geom_line(size=1.25) +
+    geom_point(color="black", fill="black", size=5) +
+    scale_shape_prism(palette = "complete") + # change prism bullet shape palette
+    scale_color_manual(values=cols) +
+    scale_y_log10(limit=c(0.01,max_yax), # put y on log10 scale
+                  minor_breaks=y_minor,
+                  guide=guide_prism_minor(),
+                  expand=c(0,0)) + 
+    scale_x_continuous(breaks=seq(0,max(data_long$Time),by=10),
+                       guide=guide_prism_minor(),
+                       expand=c(0,0)) + 
+    labs(x="Time (min)",
+         y="A550",
+         color=variables[1], 
+         linetype=variables[2],
+         shape=variables[3]
+         ) +
+    theme_prism(border=T) + # theme like prism plot
+    coord_cartesian(clip="off") +
+    theme(aspect.ratio=1/1, 
+          legend.title = element_text(),
+          plot.margin=unit(c(1,5,1,1), "lines"))
+  return(g)
+}
+
+# save plot as .png
+save = paste0(strsplit(basename(file), ".csv")[[1]], ".png")
+png(save, width=7.5, height=7.5, units="in", res=200)
+if (ncol(data_long) == 3) {
+  simpleplot(data_long=data_long)
+} else {
+  complexplot(data_long=data_long, variables=var)
+}
+invisible(dev.off())
+print(paste0("Saved: ", save))
+```
+
+    ## [1] "Saved: simpledata.png"
