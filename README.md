@@ -486,6 +486,8 @@ data <- read_csv(file)
 ### USER INPUT - CHANGE THIS LINE ###
 ### Input your variable names in quotes followed by ,
 ### like this c("var1", "var2")
+### If you only have one variable like strain/genotype,
+### you can leave this line UNCHANGED.
 var <- c()
 
 # Reformat data into long format
@@ -612,5 +614,3 @@ if (ncol(data_long) == 3) {
 invisible(dev.off())
 print(paste0("Saved: ", save))
 ```
-
-    ## [1] "Saved: simpledata.png"

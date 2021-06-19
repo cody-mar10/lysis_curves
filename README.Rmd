@@ -300,7 +300,7 @@ data_long %>% head(10)
 complexplot(data_long, var)
 ```
 
-```{r copy and paste}
+```R
 pkgs <- c("tidyverse", "ggprism", "ggrepel") # note tidyverse includes ggplot2 and dplyr
 # Check if packages are installed
 for (p in pkgs) {
@@ -321,6 +321,8 @@ data <- read_csv(file)
 ### USER INPUT - CHANGE THIS LINE ###
 ### Input your variable names in quotes followed by ,
 ### like this c("var1", "var2")
+### If you only have one variable like strain/genotype,
+### you can leave this line UNCHANGED.
 var <- c()
 
 # Reformat data into long format
